@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&family=Oxygen:wght@300;400;700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&family=Oxygen:wght@300;400;700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Account</title>
+</head>
+<body>
+    <div id="nav">
+        <nav>
+            <a class="home" href="home1.html">
+                <div class="logo1"><img class="logo" src="logo.png"></div>
+            </a>
+            <a class="nav" href="login.html">
+             Log In/Register
+            </a>
+            <a class="nav" href="get-ambulance.html">
+             Get Ambulance
+            </a>
+            <a class="nav" href="request-blood.html">
+                Find Donor            </a>
+            <a class="nav" href="contact-us.html">
+             Contact Us
+            </a>
+            <a class="nav" href="aboutus.html">
+                Services            </a>
+           
+         </nav>
+    </div>
+
+        
+    <div class="reg-user-container">
+        <h1>Registration Form</h1>
+        <div class="img-container"><img src="ambu-user.png" alt=""></div>
+        <form action="register-user.php" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Home Address:</label>
+                <input type="text" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="e-mail">E-mail:</label>
+                <input type="text" name="e-mail" required>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Birth Date:</label>
+                <input type="date" name="birthdate" required>
+            </div>
+            <div class="form-group">
+                <label for="bloodgroup">Blood Group:</label>
+                <div class="select">
+                    <select name="bloodgroup">
+                        <option>A Positive</option>
+                        <option>A Negative</option>
+                        <option>A Unknown</option>
+                        <option>B Positive</option>
+                        <option>B Negative</option>
+                        <option>B Unknown</option>
+                        <option>AB Positive</option>
+                        <option>AB Negative</option>
+                        <option>AB Unknown</option>
+                        <option>O Positive</option>
+                        <option>O Negative</option>
+                        <option>O Unknown</option>
+                        <option>Unknown</option>
+                    </select>
+                </div>
+            </div>
+            <div class="donor">
+                <input type="checkbox" id="donorcb" name="donor" value="donor">
+                Do you want to Donate blood?
+            </div>
+
+            <button type="submit">Sign-up</button>
+
+            <div id="small-container" style="display: none;">
+                <div id="message-dialog">
+                    <p id="message-text"></p>
+                </div>
+            </div>
+
+        </form>
+
+    
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+        $(document).ready(function() {
+            $("form").submit(function(event) {
+                event.preventDefault();
+    
+                // Serialize the form data
+                var formData = $(this).serialize();
+    
+                // Send an AJAX request to the PHP script
+                $.ajax({
+                    type: "POST",
+                    url: "register-user.php", // Update the path to your PHP script
+                    data: formData,
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.success) {
+                            // Registration was successful, show the message
+                            $("#message-text").text(response.message);
+                            $("#small-container").show();
+                        } else {
+                            // Registration failed, show an error message
+                            alert(response.message);
+                        }
+                    },
+                    error: function() {
+                        alert("An error occurred while processing your request.");
+                    }
+                });
+            });
+    
+            // Close the message dialog when the "Close" button is clicked
+            $("#close-message").click(function() {
+                $("#message-container").hide();
+            });
+        });
+        </script>
+
+</body>
+</html>
